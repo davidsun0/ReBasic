@@ -1,0 +1,7 @@
+NCDFRS
+%Input%A
+0%->%S
+%For(%N,0,40
+S+%e^(%%-%.5(N*A/40)%^2%%->%S
+%End%
+S*2/%sqrt(%%PI%%->%S
