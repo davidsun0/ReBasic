@@ -4,65 +4,64 @@ String ver = "0.11";
 String filepath = "untitled.8px";
 String[] ctokens;
 
-Hashtable<String, String> tokens = new Hashtable<String, String>();
+DisposeHandler dh;
 
 Program program;
 Exporter exporter;
+Importer importer;
+ConsoleLog log;
+
+ArrayList<Element> elements;
+TextField focus;
 
 void settings(){
-  size(500, 500);
+  size(800, 500);
 }
 
 void setup(){
+  dh = new DisposeHandler(this);
+  
+  log = new ConsoleLog();
   exporter = new Exporter();
+  importer = new Importer();
+  
   textFont(createFont("Lucida Console", 20));
   //String[] fontList = PFont.list();
   //printArray(fontList);
   
-  println("Loading Tokens");
-  printbar();
-  //loading 1 char tokens
-  println("loading single char tokens");
-  ctokens = new String[128];
-  int tokencount = 0;
-  String[] loadtokens = loadStrings("tokens1.txt");
-  for(int i = 0; i < loadtokens.length; i ++){
-    int index = Integer.valueOf(loadtokens[i].substring(0, loadtokens[i].indexOf(',')));
-    ctokens[index] = loadtokens[i].substring(loadtokens[i].indexOf(',') + 1, loadtokens[i].length());
-    //println(ctokens[index]);
-    tokencount ++;
-  }
-  println("loaded " + tokencount + " single char tokens");
+  loadTokens();
   
-  //loading multi char tokens
-  println("loading multi-char tokens");
-  tokencount = 0;
-  loadtokens = loadStrings("tokens2.txt");
-  for(int i = 0; i < loadtokens.length; i ++){
-    if("//".equals(loadtokens[i].substring(0, 2))){
-      println("    [COMMENT] " + loadtokens[i].substring(2, loadtokens[i].length()));
-      continue;
-    }
-    String token, hex;
-    token = loadtokens[i].substring(0, loadtokens[i].indexOf(','));
-    hex = loadtokens[i].substring(loadtokens[i].indexOf(',') + 1, loadtokens[i].length());
-    tokens.put(token, hex);
-    tokencount ++;
-  }
-  println("loaded " + tokencount + " multi-char tokens");
-  println();
+  elements = new ArrayList<Element>();
+  elements.add(focus = new NameField(0, 0));
+  elements.add(new SaveButton(300, 4));
+  elements.add(new ExportButton(330, 4));
+  //elements.add(new CommentField(0, 30));
 }
 
 void draw(){
-  fill(0);
-  textSize(20);
-  program = new Program();
-  exporter.export(program);
-  noLoop();
+  background(250);
+  //program = new Program("input.txt");
+  //exporter.export(program);
+  //importer.decode("CHARTEST.8xp");
+  log.render(500, 0);
+  for(Element e : elements){
+    e.render();
+  }
+}
+
+void keyPressed(){
+  focus.onKeyDown();
+}
+
+void mousePressed(){
+  for(Element e : elements){
+    if(e.isInside(mouseX, mouseY))
+      e.onMouseDown();
+  }
 }
 
 boolean isalphanum(char c){
-  if(c >= 48 && c <= 90)
+  if((c >= 48 && c <= 57) || (c >= 65 && c <= 90))
     return true;
   else
     return false;
@@ -76,5 +75,19 @@ boolean isloweralpha(char c){
 }
 
 void printbar(){
-  println("----------------");
+  log.printbar();
+}
+
+public class DisposeHandler {
+   
+  DisposeHandler(PApplet pa)
+  {
+    pa.registerMethod("dispose", this);
+  }
+   
+  public void dispose()
+  {      
+    println("Closing sketch");
+    // Place here the code you want to execute on exit
+  }
 }

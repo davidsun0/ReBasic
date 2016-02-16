@@ -110,6 +110,7 @@ rand,AB0
 pi,AC
 PI,AC
 getKey,AD
+?,AF
 -,B0
 int(,B1
 abs(,B2
@@ -583,7 +584,7 @@ LinRegTInt,EF15
 Manual-Fit,EF16
 //loading statistics tokens...
 RegEq,6201
-statn,6202
+stat n,6202
 xbar,6203
 sumx,6204
 sumx^2,6205
@@ -599,32 +600,32 @@ sumy^2,620E
 Sy,620F
 sigmay,6210
 sumxy,6211
-statr,6212
+stat r,6212
 Med,6213
 Q1,6214
 Q3,6215
-stata,6216
-statb,6217
-statc,6218
-statd,6219
-state,621A
-statx1,621B
-statx2,621C
-statx3,621D
-staty1,621E
-staty2,621F
-staty3,6220
-statn,6221
-statp,6222
-statz,6223
-statt,6224
-statchi^2,6225
-statChi^2,6225
-statF,6226
-statdf,6227
-statphat,6228
-statphat1,6229
-statphat2,622A
+stat a,6216
+stat b,6217
+stat c,6218
+stat d,6219
+stat e,621A
+stat x1,621B
+stat x2,621C
+stat x3,621D
+stat y1,621E
+stat y2,621F
+stat y3,6220
+stat n,6221
+stat p,6222
+stat z,6223
+stat t,6224
+stat chi^2,6225
+stat Chi^2,6225
+stat F,6226
+stat df,6227
+stat phat,6228
+stat phat1,6229
+stat phat2,622A
 xbar1,622B
 Sx1,622C
 n1,622D
@@ -634,8 +635,7 @@ n2,6230
 Sxp,6231
 lower,6232
 upper,6233
-//note: input statistic 's' as stats
-stats,6234
+stat s,6234
 rsquared,6235
 r^2,6235
 Rsquared,6236

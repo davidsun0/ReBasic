@@ -2,35 +2,40 @@ class Exporter{
   ArrayList<String> bytes;
   
   Exporter(){
-    bytes = new ArrayList<String>();
+    //bytes = new ArrayList<String>();
   }
   
   void export(Program p){
     bytes = new ArrayList<String>();
     filepath = p.name + ".8xp";
-    println("\nExporting program to " + filepath);
+    log.debug();
+    log.info("Exporting program to " + filepath);
     printbar();
-    println("adding header...");
+    log.info("adding header...");
     addHeader();
-    addComment("REbasic ver " + ver);
-    println("adding metadata...");
+    addComment(p.comment);
+    log.info("adding metadata...");
     addWord(p.length + 19);
     addByte("0D"); addByte("00");
     addWord(p.length + 2);
-    addByte("05");
-    println("adding name...");
+      if(p.archived)
+        addByte("06");
+      else
+        addByte("05");
+    log.info("adding name...");
     addBytes(p.bname);
-    println("adding other data...");
+    log.info("adding other data...");
     addByte("00"); addByte("00");
     addWord(p.length + 2);
     addWord(p.length);
-    println("adding body..");
+    log.info("adding body..");
     addBytes(p.bprgm);
-    println("adding checksum...");
+    log.info("adding checksum...");
     addCheckSum();
-    println("saving file...");
+    log.info("saving file...");
     flushBytes();
-    println("\ndone!");
+    log.debug();
+    log.info("exported " + filepath);
   }
   
   void toBytes(String s){
@@ -49,7 +54,7 @@ class Exporter{
       return;
     }
     else if(hex.length() != 2){
-      println("bad hex code: " + hex);
+      log.warning("bad hex code: " + hex);
       return;
     }
     
@@ -70,7 +75,7 @@ class Exporter{
   
   void addByte(int n){
     if(n > 255 || n < 0){
-      println("too big for 1 byte");
+      log.warning("bad byte inuput");
       return;
     }
     
@@ -79,8 +84,8 @@ class Exporter{
   
   void addWord(int n){
     if(n > 65536 || n < 0){
-      println("too big for 2 bytes");
-      println("... bit shifting...");
+      log.warning("bad word input");
+      log.info("... bit shifting...");
       n = n << 24;
       n = n >> 24;
     }
@@ -103,7 +108,7 @@ class Exporter{
     else{
       b = "";
     }
-    println("    word " + n + " : " + temp + " -> " + a + " " + b);
+    log.info("    word " + n + " : " + temp + " -> " + a + " " + b);
     bytes.add(a);
     bytes.add(b);
   }
@@ -120,9 +125,11 @@ class Exporter{
   }
   
   void flushBytes(){
-    println("saving to " + filepath);
+    log.info("saving to " + filepath);
     int temp;
     byte[] output = new byte[bytes.size()];
+    
+    String line = "";
     for(int i = 0; i < bytes.size(); i ++){
       if((temp = Integer.decode("0x" + bytes.get(i))) > 127){
         output[i] = (byte)(temp & 0xFF);
@@ -131,10 +138,13 @@ class Exporter{
       else{
         output[i] = Byte.decode("0x" + bytes.get(i));
       }
-      print(bytes.get(i) + " ");
-      if((i + 1) % 16 == 0)
-        println();
+      line = line + bytes.get(i) + " ";
+      if((i + 1) % 16 == 0){
+        log.debug(line);
+        line = "";
+      }
     }
+    log.debug(line);
     saveBytes(filepath, output);
   }
   
@@ -151,13 +161,13 @@ class Exporter{
     }
   }
   
-  void addComment(String comme){
-    println("adding comment: " + comme);
+  void addComment(String comment){
+    log.info("adding comment: " + comment);
     for(int i = 0; i < 41; i ++){
-      if(i >= comme.length())
+      if(i >= comment.length())
         addByte("00");
       else
-        addByte(Integer.toHexString(comme.charAt(i)));
+        addByte(Integer.toHexString(comment.charAt(i)));
     }
     addByte("00");
   }

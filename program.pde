@@ -1,13 +1,15 @@
 class Program{
   String name;
   String[] bname = new String[8];
+  String comment = "REbasic ver " + ver;
+  boolean archived = false;
   
   String[] prgm;
   ArrayList<String> bprgm;
   int length;
   
   Program(){
-    this("input.txt");
+    ;
   }
   
   Program(String file){
@@ -21,8 +23,8 @@ class Program{
     encodeName();
     encodeBody();
     //printBody();
-    println();
-    println("program length: " + length);
+    log.debug();
+    log.info("program length: " + length);
   }
   
   void tokenbytes(String hex){
@@ -36,15 +38,16 @@ class Program{
       length += 2;
     }
     else{
-      println();
-      println("bad bprgm hex: " + hex);
-      println();
+      log.debug();
+      log.warning("bad bprgm hex: " + hex);
+      log.debug();
     }
   }
   
   void encodeName(){
-    println("encoded name: " + name);
+    log.info("encoding name: " + name);
     printbar();
+    String namebytes = "";
     for(int i = 0; i < 8; i ++){
       if(i >= name.length() || !isalphanum(name.charAt(i)))
         //pretty sure only alphanumeric chars are allowed
@@ -52,14 +55,14 @@ class Program{
       else
         bname[i] = Integer.toHexString(name.charAt(i));
       
-      print(bname[i] + " ");
+      namebytes += (bname[i] + " ");
     }
-    println();
-    println();
+    log.debug(namebytes);
+    log.debug();
   }
   
   void encodeBody(){
-    println("encoding body...");
+    log.info("encoding body...");
     printbar();
     bprgm = new ArrayList<String>();
     for(int i = 0; i < prgm.length; i ++){
@@ -79,9 +82,10 @@ class Program{
         else if(currchar == '%'){
           
           //detecting %%% to allow for %
+          //but %percent% is prefered
           if(j < prgm[i].length() - 2 && '%' == prgm[i].charAt(j + 1) && '%' == prgm[i].charAt(j + 2)){
             prgm[i] = prgm[i].substring(0, j) + prgm[i].substring(j + 2, prgm[i].length());
-            println(prgm[i]);//hopefully this works
+            log.debug(prgm[i]);//hopefully this works
             tokenbytes(tokens.get("%"));
           }
           
@@ -89,13 +93,13 @@ class Program{
           String token;
           token = prgm[i].substring(j + 1, prgm[i].indexOf('%', j + 1));
           prgm[i] = prgm[i].substring(0, j) + prgm[i].substring(prgm[i].indexOf('%', j + 1) + 1, prgm[i].length());
-          println("encoding token " + token + " on line " + (i+1) + " to " + tokens.get(token));
+          log.info("encoding token " + token + " on line " + (i+1) + " to " + tokens.get(token));
           
           //bprgmBytes also increments length
           if(tokens.get(token) != null)
             tokenbytes(tokens.get(token));
           else
-            println("[WARNING] bad token: " + token);
+            log.warning("bad token: " + token);
           j --;
         }
         else{
@@ -109,10 +113,14 @@ class Program{
   }
   
   void printBody(){
+    String line = "";
     for(int i = 0; i < bprgm.size(); i ++){
-      print(bprgm.get(i) + " ");
-      if((i + 1) % 16 == 0)
-        println();
+      line = line + bprgm.get(i) + " ";
+      if((i + 1) % 16 == 0){
+        log.debug(line);
+        line = "";
+      }
     }
+    log.debug(line);
   }
 }

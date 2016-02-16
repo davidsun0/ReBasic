@@ -1,7 +1,7 @@
-NCDFRS
-%Input%A
-0%->%S
-%For(%N,0,40
-S+%e^(%%-%.5(N*A/40)%^2%%->%S
-%End%
-S*2/%sqrt(%%PI%%->%S
+titletst
+%ClrHome%
+%Disp%"lowercase
+%Disp%"%chi%%@%#$%percent%|_\%smark%%.mark%%xmark%
+%Disp%"%alpha%%beta%%delta%%gamma%%Omega%%phat%%statphat2%
+%Disp%"%!invert%Espa%ntilde%ol!
+%Disp%"%?invert%ESPA%Ntilde%OL%?%
