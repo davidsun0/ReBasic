@@ -51,7 +51,11 @@ class SaveButton extends Button{
   }
   
   void activate(){
-    log.error("Save function not implemented!");
+    log.info("saving ProgramField to file");
+    if(elements.get(1) instanceof ProgramField)
+      ((ProgramField)elements.get(1)).outputStrings();
+    else
+      log.error("Element 1 not ProgramField");
   }
 }
 
@@ -66,7 +70,11 @@ class ExportButton extends SaveButton{
   }
   
   void activate(){
-    log.error("Export function not implemented!");
+    log.info("exporting ProgramField to file");
+    if(elements.get(1) instanceof ProgramField)
+      exporter.export(((ProgramField)elements.get(1)).outputPrgm());
+    else
+      log.error("Element 1 not ProgramField");
   }
 }
 
@@ -127,6 +135,8 @@ class NameField extends TextField{
   }
   
   String gettext(){
+    if(text == null || "".equals(text))
+      return "UNTITLED";
     return text;
   }
   
@@ -143,15 +153,29 @@ class NameField extends TextField{
         text = text.substring(0, i) + text.substring(i + 1);
       }
     }
+    else if(key == DELETE){
+      if(i == text.length() - 1)
+        text = text.substring(0, text.length() - 1);
+      else if(text.length() > 0){
+        text = text.substring(0, i) + text.substring(i + 1, text.length());
+      }
+    }
     else if(key == CODED){
       if(keyCode == LEFT){
         if(i > 0)
           i --;
       }
-      if(keyCode == RIGHT){
+      else if(keyCode == RIGHT){
         if(i < 7)
           i ++;
       }
+    }
+    else if(keyCode == ENTER){
+      //hopefully that's the prgmfield
+      if(elements.get(1) instanceof ProgramField)
+        focus = (ProgramField)elements.get(1);
+      else
+        log.error("Element 1 not ProgramField");
     }
     else if(text.length() < 8 && i == text.length())
         addchar(key);
@@ -234,11 +258,16 @@ class CommentField extends TextField{
   }
 }
 
+int cursorDelay = 0;
+
 void renderCursor(float x, float y){
-  if(second() % 2 == 0){
+  if(cursorDelay != 0 || second() % 2 == 0){
     fill(0);
     rect(x, y, 12, 20);
   }
+  
+  if(cursorDelay > 0)
+    cursorDelay --;
 }
 
 void renderCursorFull(float x, float y){
@@ -246,4 +275,8 @@ void renderCursorFull(float x, float y){
     fill(200);
     rect(x, y, 12, 20);
   }
+}
+
+void setCursorDelay(int delay){
+  cursorDelay = delay;
 }

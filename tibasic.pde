@@ -1,5 +1,5 @@
 import java.util.Hashtable;
-String ver = "0.11";
+String ver = "0.12";
 
 String filepath = "untitled.8px";
 String[] ctokens;
@@ -32,9 +32,11 @@ void setup(){
   loadTokens();
   
   elements = new ArrayList<Element>();
-  elements.add(focus = new NameField(0, 0));
-  elements.add(new SaveButton(300, 4));
-  elements.add(new ExportButton(330, 4));
+  elements.add(focus = new NameField(20, 10));
+  elements.add(new ProgramField(20, 40));
+  elements.add(new SaveButton(300, 14));
+  elements.add(new ExportButton(330, 14));
+  elements.add(new OpenButton(360, 14));
   //elements.add(new CommentField(0, 30));
 }
 
@@ -57,6 +59,15 @@ void mousePressed(){
   for(Element e : elements){
     if(e.isInside(mouseX, mouseY))
       e.onMouseDown();
+  }
+}
+
+String getname(){
+  if(elements.get(0) instanceof NameField)
+    return ((NameField)elements.get(0)).gettext();
+  else{
+    log.error("Element 0 not NameField");
+    return "UNTITLED";
   }
 }
 
@@ -89,5 +100,12 @@ public class DisposeHandler {
   {      
     println("Closing sketch");
     // Place here the code you want to execute on exit
+    log.notif("Autosaving");
+    if(elements.get(1) instanceof ProgramField){
+      ((ProgramField)elements.get(1)).outputStrings();
+    }
+    else{
+      log.error("Element 1 is not ProgramField");
+    }
   }
 }

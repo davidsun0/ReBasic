@@ -48,6 +48,11 @@ class ConsoleLog{
     println(s);
   }
   
+  void notif(String s){
+    messages.add(new NotifEntry(s));
+    println(s);
+  }
+  
   void printbar(){
     messages.add(new ConsoleEntry("----------------"));
     println("----------------");
@@ -99,6 +104,17 @@ class InfoEntry extends ConsoleEntry{
   
   void render(float x, float y){
     fill(100, 100, 250);
+    text(message, x + 4, y);
+  }
+}
+
+class NotifEntry extends ConsoleEntry{
+  NotifEntry(String m){
+    message = m;
+  }
+  
+  void render(float x, float y){
+    fill(100, 250, 100);
     text(message, x + 4, y);
   }
 }
