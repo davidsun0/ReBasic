@@ -1,4 +1,5 @@
 import java.util.Hashtable;
+import java.awt.event.KeyEvent;
 String ver = "0.12";
 
 String filepath = "untitled.8px";
@@ -38,6 +39,7 @@ void setup(){
   elements.add(new ExportButton(330, 14));
   elements.add(new OpenButton(360, 14));
   //elements.add(new CommentField(0, 30));
+  importer.importtext("..\\autosave.txt");
 }
 
 void draw(){
@@ -52,6 +54,8 @@ void draw(){
 }
 
 void keyPressed(){
+  if(keyCode == KeyEvent.VK_F1)
+    ((ProgramField)elements.get(1)).getchar();
   focus.onKeyDown();
 }
 
@@ -102,7 +106,7 @@ public class DisposeHandler {
     // Place here the code you want to execute on exit
     log.notif("Autosaving");
     if(elements.get(1) instanceof ProgramField){
-      ((ProgramField)elements.get(1)).outputStrings();
+      ((ProgramField)elements.get(1)).outputStrings("autosave.txt");
     }
     else{
       log.error("Element 1 is not ProgramField");

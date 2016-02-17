@@ -89,7 +89,28 @@ class OpenButton extends SaveButton{
   }
   
   void activate(){
-    log.error("Open function not implemented!");
+    log.debug("opening file");
+    selectInput("Select a file to process:", "openFile");
+  }
+}
+
+void openFile(File selected){
+  if(selected == null){
+    log.info("no file selected");
+    return;
+  }
+  
+  String path = selected.getAbsolutePath();
+  log.info("loading " + path);
+  String extention = path.substring(path.length() - 4, path.length());
+  if(".txt".equals(extention)){
+    importer.importtext(path);
+  }
+  else if(".8xp".equals(extention)){
+    importer.importbin(path);
+  }
+  else{
+    log.error("unsupported file type");
   }
 }
 
@@ -166,14 +187,16 @@ class NameField extends TextField{
           i --;
       }
       else if(keyCode == RIGHT){
-        if(i < 7)
+        if(i < 7 && i < text.length())
           i ++;
       }
     }
-    else if(keyCode == ENTER){
+    else if(keyCode == ENTER || key == TAB){
       //hopefully that's the prgmfield
-      if(elements.get(1) instanceof ProgramField)
+      if(elements.get(1) instanceof ProgramField){
         focus = (ProgramField)elements.get(1);
+        setCursorDelay(20);
+      }
       else
         log.error("Element 1 not ProgramField");
     }
@@ -211,6 +234,11 @@ class NameField extends TextField{
       else
         renderCursor(x + 53 + i * 12, y);
     }
+  }
+  
+  void setFocus(){
+    focus = this;
+    i = text.length();
   }
 }
 

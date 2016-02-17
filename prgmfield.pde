@@ -25,6 +25,9 @@ class ProgramField extends TextField{
       }
       setCursorDelay(10);
     }
+    else if(key == DELETE){
+      delchar();
+    }
     else if(key == ENTER){
       lines.set(curline, curtext);
       newline();
@@ -38,6 +41,17 @@ class ProgramField extends TextField{
         moveRight();
         setCursorDelay(10);
       }
+      else if(keyCode == DOWN){
+        moveDown();
+        setCursorDelay(10);
+      }
+      else if(keyCode == UP){
+        moveUp();
+        setCursorDelay(10);
+      }
+    }
+    else if(key == TAB){
+      
     }
     else if(key < 128){
       replacechar(curchar, key);
@@ -93,12 +107,12 @@ class ProgramField extends TextField{
   }
   
   void delline(){
-    if(lines.size() <= 1)
+    if(lines.size() <= 1 || curline == 0)
       return;
     lines.remove(curline);
     curline --;
     if(lines.size() > 0){
-      curtext = lines.get(curline );
+      curtext = lines.get(curline);
       curchar = lines.get(curline).length();
     }
   }
@@ -106,10 +120,13 @@ class ProgramField extends TextField{
   void delchar(){
     if(curchar <= 0)
       return;
-    else if(curchar == curtext.length() || curchar == curtext.length() - 1){
+    else if(curchar == curtext.length()){
       curtext = curtext.substring(0, curtext.length() - 1);
       curchar --;
       return;
+    }
+    else if(curchar == curtext.length() - 1){
+      curtext = curtext.substring(0, curtext.length() - 1);
     }
     else{
       curtext = curtext.substring(0, curchar) + curtext.substring(curchar + 1, curtext.length());
@@ -134,6 +151,11 @@ class ProgramField extends TextField{
     }
   }
   
+  void getchar(){
+    if(curchar < curtext.length())
+      println((int)curtext.charAt(curchar));
+  }
+  
   void moveLeft(){
     if(curchar > 0)
       curchar --;
@@ -144,8 +166,32 @@ class ProgramField extends TextField{
       curchar ++;
   }
   
+  void moveDown(){
+    if(curline < lines.size() - 1){
+      lines.set(curline, curtext);
+      curline ++;
+      curtext = lines.get(curline);
+      if(curchar > curtext.length())
+        curchar = curtext.length();
+    }
+  }
+  
+  void moveUp(){
+    if(curline > 0){
+      lines.set(curline, curtext);
+      curline --;
+      curtext = lines.get(curline);
+      if(curchar > curtext.length())
+        curchar = curtext.length();
+    }
+  }
+  
   boolean isEmpty(){
-    if("".equals(curtext) && lines.size() == 1)
+    lines.set(curline, curtext);
+    
+    if(lines.size() == 0)
+      return true;
+    if("".equals(lines.get(0)) && lines.size() == 1)
       return true;
     else
       return false;
@@ -169,6 +215,10 @@ class ProgramField extends TextField{
   }
   
   void outputStrings(){
+    outputStrings("\\output\\" + getname() + ".txt");
+  }
+  
+  void outputStrings(String filepath){
     if(isEmpty()){
       log.info("nothing to save");
       return;
@@ -180,7 +230,7 @@ class ProgramField extends TextField{
     for(int i = 0; i < lines.size(); i ++){
       temp[i + 1] = lines.get(i);
     }
-    saveStrings("\\output\\" + getname() + ".txt" , temp);
+    saveStrings(filepath , temp);
     log.info("saved ProgramField to file");
     log.debug();
   }
