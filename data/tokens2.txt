@@ -35,7 +35,7 @@ fMax(,28
 i,2C
 CubicReg,2E
 QuartReg,2F
-E,3B
+EE,3B
 or,3C
 xor,3D
 and,40
@@ -62,9 +62,9 @@ IndpntAuto,7A
 IndpntAsk,7B
 DepentAuto,7C
 DependAsk,7D
-smark,7F
 squaremark,7F
-xmark,80
++mark,80
+plusmark,80
 crossmark,80
 .mark,81
 dotmark,81
@@ -310,7 +310,7 @@ DeltaTbl,6321
 Tstep,6322
 thetaStep,6323
 ZTstep,6324
-zthetastep,6325
+Zthetastep,6325
 DeltaX,6326
 DeltaY,6327
 XFact,6328
@@ -333,8 +333,8 @@ ZXres,6337
 npv(,BB00
 irr(,BB01
 bal(,BB02
-sumprn(,BB03
-Sumprn(,BB03
+sigmaprn(,BB03
+Sigmaprn(,BB03
 sumInt(,BB04
 SumInt(,BB04
 >Nom9,BB05
@@ -361,7 +361,7 @@ binomcdf(,BB16
 poissonpdf(,BB17
 poissoncdf(,BB18
 geometpdf(,BB19
-geometpdf(,BB1A
+geometcdf(,BB1A
 normalpdf(,BB1B
 tpdf(,BB1C
 Chi^2pdf(,BB1D
@@ -508,12 +508,12 @@ rho,BBA8
 Sigma,BBA9
 phi,BBAB
 Omega,BBAC
-phat,BBAD
-p hat,BBAD
-p-hat,BBAD
+#char ____ symbols are repeats that don't have functionality
+char phat,BBAD
+char p-hat,BBAD
 chi,BBAE
-Wau,BBAF
-Digamma,BBAF
+char Wau,BBAF
+char Digamma,BBAF
 sigma,BBCB
 tau,BBCC
 Iacute,BBCD
@@ -531,7 +531,7 @@ _,BBD9
 percent,BBDA
 ...,BBDB
 angle,BBDC
-specialbeta,BBDD
+eszett,BBDD
 specialx,BBDE
 specialT,BBDF
 s0,BBE0
@@ -545,10 +545,10 @@ s7,BBE7
 s8,BBE8
 s9,BBE9
 s10,BBEA
-larrow,BBEB
-rarrow,BBEC
-uarrow,BBED
-darrow,BBEE
+leftarrow,BBEB
+rightarrow,BBEC
+uparrow,BBED
+downarrow,BBEE
 specialxno2,BBF0
 integral,BBF1
 biguparrow,BBF2
@@ -615,17 +615,20 @@ stat x3,621D
 stat y1,621E
 stat y2,621F
 stat y3,6220
-stat n,6221
+//6202 <-> 6221
+stat another n,6221
 stat p,6222
 stat z,6223
 stat t,6224
+chi^2,6225
 stat chi^2,6225
 stat Chi^2,6225
+Digamma,6226
 stat F,6226
-stat df,6227
-stat phat,6228
-stat phat1,6229
-stat phat2,622A
+df,6227
+phat,6228
+phat1,6229
+phat2,622A
 xbar1,622B
 Sx1,622C
 n1,622D

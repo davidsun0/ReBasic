@@ -1,9 +1,6 @@
 class Exporter{
+  //hex bytes saved as strings
   ArrayList<String> bytes;
-  
-  Exporter(){
-    //bytes = new ArrayList<String>();
-  }
   
   void export(Program p){
     bytes = new ArrayList<String>();
@@ -124,6 +121,7 @@ class Exporter{
     //addByte("02");
   }
   
+  //Turns byte strings to binary
   void flushBytes(){
     log.info("saving to " + filepath);
     int temp;
@@ -161,6 +159,7 @@ class Exporter{
     }
   }
   
+  //Adds to header of program
   void addComment(String comment){
     log.info("adding comment: " + comment);
     for(int i = 0; i < 41; i ++){

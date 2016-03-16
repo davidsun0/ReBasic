@@ -5,23 +5,22 @@ class Importer{
     sbytes = new ArrayList<String>();
   }
   
-  void importtext(String filepath){
-    ProgramField pfield = (ProgramField)elements.get(1);
-    NameField nfield = (NameField)elements.get(0);
-    
+  void importtext(String filepath){    
     String[] lines = loadStrings(filepath);
     if(lines == null || lines.length == 0)
       return;
-    nfield.text = lines[0];
-    nfield.setFocus();
+    nameField.text = lines[0];
+    nameField.setFocus();
     
-    
-    pfield.lines = new ArrayList<String>();
+    log.error("Uncomment me!");
+    /*
+    prgmField.lines = new ArrayList<String>();
     for(int i = 1; i < lines.length; i ++){
-      pfield.lines.add(lines[i].replace(Character.toString((char)27), ""));
+      prgmField.lines.add(lines[i].replace(Character.toString((char)27), ""));
     }
     
-    pfield.curtext = pfield.lines.get(0);
+    prgmField.curtext = prgmField.lines.get(0);
+    //*/
     
     //removing eof char
     /*
@@ -31,14 +30,15 @@ class Importer{
     else
       lastline = "";
     pfield.lines.set(pfield.lines.size() - 1, lastline);
-    */
     
-    String lastline = pfield.lines.get(0);
+    
+    String lastline = prgmField.lines.get(0);
     if(lastline.length() > 1)
       lastline = lastline.substring(0, lastline.length() - 1);
     else
       lastline = "";
-    pfield.lines.set(0, lastline);
+    prgmField.lines.set(0, lastline);
+    */
   }
   
   void importbin(String filepath){
@@ -57,7 +57,7 @@ class Importer{
     log.debug(temp);
     
     log.debug();
-    log.info("checking header...");
+    log.debug("checking header...");
     log.printbar();
     //standard header
     log.debug("2A 2A 54 49 38 33 46 2A 1A 0A 00");
@@ -67,7 +67,13 @@ class Importer{
     for(int i = 0; i < 0x0B; i ++){
       temp = temp + sbytes.get(i) + " ";
     }
-    log.debug(temp);
+    
+    if("2A 2A 54 49 38 33 46 2A 1A 0A 00".equals(temp))
+      log.debug(temp);
+    else{
+      log.warning(temp);
+      log.warning("file may be corrupted");
+    }
     
     log.debug();
     log.debug("reading comment...");
@@ -78,8 +84,8 @@ class Importer{
     log.debug();
     log.debug("reading name...");
     log.printbar();
-    String name = strFromBytes(0x3C, 0x43);
-    log.debug(name);
+    temp = strFromBytes(0x3C, 0x43);
+    log.debug(temp);
     
     ArrayList<String> lines = new ArrayList<String>();
     String cline = "";
@@ -117,13 +123,19 @@ class Importer{
        }
     }
     println(cline);
+    lines.add(cline);
     
-    ProgramField pfield = (ProgramField)elements.get(1);
-    NameField nfield = (NameField)elements.get(0);
+    //ProgramField pfield = (ProgramField)elements.get(1);
+    //NameField nfield = (NameField)elements.get(0);
     
-    nfield.text = name.replace(" ", "");
-    pfield.lines = lines;
-    nfield.setFocus();
+    nameField.text = temp.replace(" ", "");
+    log.error("Uncomment me too!");
+    //prgmField.lines = lines; 
+    for(int i = 0; i < lines.size(); i ++){
+      println(lines.get(i));
+    }
+    //prgmField.curtext = lines.get(0);
+    nameField.setFocus();
     
   }
   
@@ -204,8 +216,8 @@ class Importer{
          cline = cline + detokenize(cur);
        }
     }
-    println(cline);
-    
+    //println(cline);
+    lines.add(cline);
     
     String[] prgm = new String[lines.size() + 1];
     prgm[0] = writeto.name;

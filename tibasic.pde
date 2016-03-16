@@ -1,52 +1,64 @@
 import java.util.Hashtable;
 import java.awt.event.KeyEvent;
-String ver = "0.12";
+final String ver = "0.12";
 
 String filepath = "untitled.8px";
+
+//1 char tokens
 String[] ctokens;
 
+//sets up autosave on close
 DisposeHandler dh;
 
-Program program;
 Exporter exporter;
 Importer importer;
 ConsoleLog log;
 
+//Textfields and GUI elements
 ArrayList<Element> elements;
 TextField focus;
+ProgramField prgmField;
+NameField nameField;
 
 void settings(){
   size(800, 500);
 }
 
 void setup(){
+  surface.setTitle("ReBasic ver " + ver);
   dh = new DisposeHandler(this);
   
   log = new ConsoleLog();
   exporter = new Exporter();
   importer = new Importer();
+  tokenFactory = new TokenFactory();
   
+  //gets monospace font
   textFont(createFont("Lucida Console", 20));
-  //String[] fontList = PFont.list();
-  //printArray(fontList);
+  println(textWidth("X"));
   
+  //loads from tokens1.txt and tokens2.txt
   loadTokens();
   
+  //adding GUI elements
+  prgmField = new ProgramField(20, 40);
+  nameField = new NameField(20, 10);
   elements = new ArrayList<Element>();
-  elements.add(focus = new NameField(20, 10));
-  elements.add(new ProgramField(20, 40));
-  elements.add(new SaveButton(300, 14));
-  elements.add(new ExportButton(330, 14));
-  elements.add(new OpenButton(360, 14));
-  //elements.add(new CommentField(0, 30));
+  elements.add(focus = nameField);
+  elements.add(prgmField);
+  elements.add(new NewButton(299, 15));
+  elements.add(new OpenButton(336, 15));
+  elements.add(new SaveButton(380, 15));
+  elements.add(new ExportButton(426, 15));
+  
+  //importer loads file from last autosave
   importer.importtext("..\\autosave.txt");
+  
+  textAlign(LEFT, TOP);
 }
 
 void draw(){
   background(250);
-  //program = new Program("input.txt");
-  //exporter.export(program);
-  //importer.decode("CHARTEST.8xp");
   log.render(500, 0);
   for(Element e : elements){
     e.render();
@@ -54,8 +66,13 @@ void draw(){
 }
 
 void keyPressed(){
-  if(keyCode == KeyEvent.VK_F1)
-    ((ProgramField)elements.get(1)).getchar();
+  //uncomment after can get current char from prgmfield
+  //if(keyCode == KeyEvent.VK_F1)
+    //((ProgramField)elements.get(1)).getchar();
+  if(keyCode == KeyEvent.VK_F1){
+    saveFrame("screenshot####.png");
+    log.notif("saved screenshot");
+  }
   focus.onKeyDown();
 }
 
@@ -66,6 +83,7 @@ void mousePressed(){
   }
 }
 
+//Gets name text from NameField
 String getname(){
   if(elements.get(0) instanceof NameField)
     return ((NameField)elements.get(0)).gettext();
@@ -75,6 +93,8 @@ String getname(){
   }
 }
 
+//is char acceptable to input to program
+//alpha-numeric
 boolean isalphanum(char c){
   if((c >= 48 && c <= 57) || (c >= 65 && c <= 90))
     return true;
@@ -82,6 +102,7 @@ boolean isalphanum(char c){
     return false;
 }
 
+//lowercase letter
 boolean isloweralpha(char c){
   if(c >= 97 && c <= 122)
     return true;
@@ -89,10 +110,12 @@ boolean isloweralpha(char c){
     return false;
 }
 
+//just prints "---------" to console
 void printbar(){
   log.printbar();
 }
 
+//Activates on close
 public class DisposeHandler {
    
   DisposeHandler(PApplet pa)
@@ -102,14 +125,8 @@ public class DisposeHandler {
    
   public void dispose()
   {      
-    println("Closing sketch");
-    // Place here the code you want to execute on exit
+    //Code executes on exit
     log.notif("Autosaving");
-    if(elements.get(1) instanceof ProgramField){
-      ((ProgramField)elements.get(1)).outputStrings("autosave.txt");
-    }
-    else{
-      log.error("Element 1 is not ProgramField");
-    }
+    prgmField.outputStrings("autosave.txt");
   }
 }

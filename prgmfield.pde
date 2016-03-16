@@ -1,3 +1,4 @@
+/*
 class ProgramField extends TextField{
   ArrayList<String> lines;
   int curline = 0;
@@ -20,17 +21,54 @@ class ProgramField extends TextField{
     if(key == BACKSPACE){
       if(curtext.length() == 0)
         delline();
-      else{
-        delchar();
+      else if(curline > 0 && curchar == 0){
+        if(curtext.length() == 1){
+          delchar();
+        }
+        else if(curline > 0){
+          curtext = lines.get(curline - 1) + curtext;
+          curline --;
+          curchar = lines.get(curline).length();
+          lines.remove(curline + 1);
+        }
       }
+      else if(curchar > 0){
+        if(curchar == curtext.length())
+          delchar();
+        else{
+          delchar();
+          curchar --;
+        }
+      }
+      
+      else if(curchar == 0){
+        //delchar();
+      }
+      
+      if(curline < topline)
+        topline --;
       setCursorDelay(10);
     }
     else if(key == DELETE){
-      delchar();
+      if(curchar != curtext.length())
+        delchar();
+      if(curchar == curtext.length() && curline < lines.size() - 1){
+        curtext = curtext + lines.get(curline + 1);
+        lines.remove(curline + 1);
+      }
     }
     else if(key == ENTER){
-      lines.set(curline, curtext);
-      newline();
+      if(curchar != curtext.length()){
+        lines.add(curline + 1, curtext.substring(curchar, curtext.length()));
+        lines.set(curline, curtext.substring(0, curchar));
+        curline ++;
+        curchar = 0;
+        curtext = lines.get(curline);
+      }
+      else{
+        lines.set(curline, curtext);
+        newline();
+      }
     }
     else if(key == CODED){
       if(keyCode == LEFT){
@@ -59,20 +97,27 @@ class ProgramField extends TextField{
     }
   }
   
+  void onMouseDown(){
+    setFocus();
+  }
+  
   void render(){
     fill(255);
     rect(x, y, w, h);
     for(int i = topline; i < lines.size(); i ++){
       if(i != curline)
-        renderLine(lines.get(i), y + i * 20 + 20);
+        renderLine(lines.get(i), y + (i - topline) * 20);
       else
-        renderLine(curtext, y + i * 20 + 20);
+        renderLine(curtext, y + (i - topline) * 20);
+        
+      if(i > topline + 20)
+        break;
     }
     if(isFocus()){
       if(curtext.length() == 37 && curchar == 37)
-        renderCursorFull(x + 12 * curchar + 4, y + curline * 20);
+        renderCursorFull(x + 12 * curchar + 4, y + (curline - topline) * 20);
       else
-        renderCursor(x + 12 * curchar, y + curline * 20);
+        renderCursor(x + 12 * curchar, y + (curline - topline) * 20);
     }
   }
   
@@ -94,12 +139,22 @@ class ProgramField extends TextField{
     }
   }
   
+  void reset(){
+    lines = new ArrayList<String>();
+    topline = 0;
+    curline = 0;
+    curchar = 0;
+    curtext = "";
+    addline(curtext);
+  }
+  
   void newline(){
-    //lines.add("");
-    lines.add("");
     curline ++;
     curchar = 0;
     curtext = "";
+    lines.add(curline, "");
+    if(curline > topline + 20)
+      topline ++;
   }
   
   void addline(String line){
@@ -173,6 +228,8 @@ class ProgramField extends TextField{
       curtext = lines.get(curline);
       if(curchar > curtext.length())
         curchar = curtext.length();
+      if(curline > topline + 21)
+        topline ++;
     }
   }
   
@@ -183,11 +240,14 @@ class ProgramField extends TextField{
       curtext = lines.get(curline);
       if(curchar > curtext.length())
         curchar = curtext.length();
+      if(curline < topline)
+      topline --;
     }
   }
   
   boolean isEmpty(){
-    lines.set(curline, curtext);
+    if(lines.size() > 0)
+      lines.set(curline, curtext);
     
     if(lines.size() == 0)
       return true;
@@ -198,7 +258,8 @@ class ProgramField extends TextField{
   }
   
   Program outputPrgm(){
-    lines.set(curline, curtext);
+    if(lines.size() > 0)
+      lines.set(curline, curtext);
     
     Program temp = new Program();
     
@@ -220,7 +281,6 @@ class ProgramField extends TextField{
   
   void outputStrings(String filepath){
     if(isEmpty()){
-      log.info("nothing to save");
       return;
     }
     
@@ -235,3 +295,4 @@ class ProgramField extends TextField{
     log.debug();
   }
 }
+*/
