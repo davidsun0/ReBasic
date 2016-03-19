@@ -35,23 +35,25 @@ class ProgramField extends TextField{
     else if(key == BACKSPACE){
       if(!"".equals(curline.current))
         curline.removeChar(curline.current.length());
-      else
-        curline.detokenize();
+      else{
+        curline.removeToken();
+        curline.removeChar();
+      }
     }
     else if(key == DELETE){
       
     }
     else if(key == ENTER){
-      if("".equals(curline.current))
-        ;//new line
-      else
-        curline.tokenize();
+      
     }
     else if(key == TAB){
       
     }
     else if(key < 128){
-      curline.addChar(key);
+      if(key == ' ')
+        curline.tokenize();
+      else
+        curline.addChar(key);
     }
   }
   
@@ -61,7 +63,7 @@ class ProgramField extends TextField{
   
   void render(){
     fill(255);
-    rect(x, y, w, h);
+    rect(x - 2, y - 2, w + 4, h + 4);
     
     curline.render(x, y);
     
@@ -174,12 +176,26 @@ class OpenLine extends Line{
       current = current.substring(0, index) + current.substring(index + 1, current.length());
   }
   
+  void removeChar(){
+    removeChar(current.length());
+  }
+  
   void removeToken(int index){
     if(index > 0 && index < tokens.size()){
       tokens.remove(index);
     }
     else if(index == tokens.size() && index > 0){
       tokens.remove(tokens.size() - 1);
+    }
+    spaceTokens();
+  }
+  
+  void removeToken(){
+    if(tokens.size() > 0){
+      if(tokens.get(tokens.size() - 1).detokenizable)
+        detokenize();
+      else
+        tokens.remove(tokens.size() - 1);
     }
     spaceTokens();
   }
@@ -193,9 +209,11 @@ class OpenLine extends Line{
   }
   
   void detokenize(){
-    tokenize();
+    if(!"".equals(current))
+      return;
     if(!tokens.isEmpty()){
       current = tokens.get(tokens.size() - 1).store;
+      //is a token
       if(current.charAt(0) == '%' && current.charAt(current.length() - 1) == '%')
         current = current.substring(1, current.length() - 1);
       tokens.remove(tokens.size() - 1);
@@ -216,7 +234,7 @@ class OpenLine extends Line{
       }
     }
     currentTokenIndex = start;
-    curchar = start;
+    curchar = start + current.length();
   }
   
   String getText(){
@@ -237,6 +255,8 @@ class Token{
   int start;
   int length;
   
+  boolean detokenizable = false;
+  
   Token(){}
   
   Token(String store, String display){
@@ -244,6 +264,11 @@ class Token{
     this.store = store;
     length = display.length();
     c = color(0);
+  }
+  
+  Token(String store, String display, boolean detokenizable){
+    this(store, display);
+    this.detokenizable = detokenizable;
   }
   
   Token(String store, String display, color c){
@@ -433,7 +458,8 @@ class TokenFactory{
     if(tokens.containsKey(input)){
       return new Token("%" + input + "%", input, color(255, 100, 0));
     }
-    return new Token(input, input);
+   
+    return new Token(input, input, true);
   }
 }
 
