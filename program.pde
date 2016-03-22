@@ -49,9 +49,11 @@ class Program{
     printbar();
     String namebytes = "";
     for(int i = 0; i < 8; i ++){
-      if(i >= name.length() || !isalphanum(name.charAt(i)))
-        //pretty sure only alphanumeric chars are allowed
+      //only alphanumeric characters and theta are allowed
+      if(i >= name.length() || !(isalphanum(name.charAt(i)) || name.charAt(i) == 'θ'))
         bname[i] = "00";
+      else if(name.charAt(i) == 'θ')
+        bname[i] = "5B";
       else
         bname[i] = Integer.toHexString(name.charAt(i));
       

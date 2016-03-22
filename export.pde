@@ -147,7 +147,7 @@ class Exporter{
   }
   
   void addHeader(){
-    String[] hstrings = split("2A 2A 54 49 38 33 46 2A 1A 0A 00" , " ");
+    String[] hstrings = split("2A 2A 54 49 38 33 46 2A 1A 0A 00", " ");
     for(int i = 0; i < hstrings.length; i ++){
       addByte(hstrings[i]);
     }

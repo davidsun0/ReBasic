@@ -2,7 +2,7 @@ import java.util.Hashtable;
 import java.awt.event.KeyEvent;
 final String ver = "0.12";
 
-String filepath = "untitled.8px";
+String filepath = "untitled.8xp";
 
 //1 char tokens
 String[] ctokens;
@@ -69,7 +69,7 @@ void keyPressed(){
   //uncomment after can get current char from prgmfield
   //if(keyCode == KeyEvent.VK_F1)
     //((ProgramField)elements.get(1)).getchar();
-  if(keyCode == KeyEvent.VK_F1){
+  if(keyCode == KeyEvent.VK_F12){
     saveFrame("screenshot####.png");
     log.notif("saved screenshot");
   }
@@ -86,7 +86,7 @@ void mousePressed(){
 //Gets name text from NameField
 String getname(){
   if(elements.get(0) instanceof NameField)
-    return ((NameField)elements.get(0)).gettext();
+    return ((NameField)elements.get(0)).getFileName();
   else{
     log.error("Element 0 not NameField");
     return "UNTITLED";

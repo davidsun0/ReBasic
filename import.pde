@@ -5,7 +5,7 @@ class Importer{
     sbytes = new ArrayList<String>();
   }
   
-  void importtext(String filepath){    
+  void importtext(String filepath){
     String[] lines = loadStrings(filepath);
     if(lines == null || lines.length == 0)
       return;
@@ -68,7 +68,7 @@ class Importer{
       temp = temp + sbytes.get(i) + " ";
     }
     
-    if("2A 2A 54 49 38 33 46 2A 1A 0A 00".equals(temp))
+    if("2A 2A 54 49 38 33 46 2A 1A 0A 00 ".equals(temp))
       log.debug(temp);
     else{
       log.warning(temp);

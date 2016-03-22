@@ -152,8 +152,8 @@ void openFile(File selected){
 
 abstract class TextField extends Element{
   
-  abstract void addchar(int c);
-  abstract void replacechar(int index, int c);
+  abstract void addChar(int c);
+  abstract void replaceChar(int index, int c);
   abstract void render();
   
   //Makes sure typing goes inside this field
@@ -197,11 +197,27 @@ class NameField extends TextField{
     i = 0;
   }
   
-  String gettext(){
+  String getText(){
     if(text == null || "".equals(text))
       return "UNTITLED";
     else
       return text;
+  }
+  
+  String getFileName(){
+    String filename = "";
+    if(text.indexOf('θ') == -1)
+      filename = getText();
+    else{
+      char chars[] = text.toCharArray();
+      for(int i = 0; i < chars.length; i ++){
+        if(chars[i] != 'θ')
+          filename = filename + "_theta";
+        else
+          filename = filename + chars[i];
+      }
+    }
+    return filename;
   }
   
   void onKeyDown(){
@@ -212,19 +228,22 @@ class NameField extends TextField{
         text = text.substring(0, text.length() - 1);
       }
       //If current char is last char, deletes without moving cursor
-      else if(i == text.length() - 1){
-        text = text.substring(0, text.length() - 1);
-      }
+      //else if(i == text.length() - 1){
+        //text = text.substring(0, text.length() - 1);
+      //}
       //Deletes char at cursor index
       else{
-        text = text.substring(0, i) + text.substring(i + 1);
+        if(i > 0){
+          text = text.substring(0, i - 1) + text.substring(i);
+          i --;
+        }
       }
     }
     
     else if(key == DELETE){
       if(i == text.length() - 1)
         text = text.substring(0, text.length() - 1);
-      else if(text.length() > 0){
+      else if(text.length() > 0 && i < text.length()){
         text = text.substring(0, i) + text.substring(i + 1, text.length());
       }
     }
@@ -232,12 +251,26 @@ class NameField extends TextField{
     //Moves cursor left or right
     else if(key == CODED){
       if(keyCode == LEFT){
-        if(i > 0)
+        if(i > 0){
           i --;
+          setCursorDelay(10);
+        }
       }
       else if(keyCode == RIGHT){
-        if(i < 7 && i < text.length())
+        if(i < 8 && i < text.length()){
           i ++;
+          setCursorDelay(10);
+        }
+      }
+      if(keyCode == KeyEvent.VK_F1){
+        if(text.length() < 8 && i == text.length()){
+          text = text + 'θ';
+          i ++;
+        }
+        else if(i < text.length()){
+          text = text.substring(0, i) + 'θ' + text.substring(i + 1);
+          i ++;
+        }
       }
     }
     
@@ -249,25 +282,38 @@ class NameField extends TextField{
     
     //add letter to cursor position
     else if(text.length() < 8 && i == text.length())
-        addchar(key);
+      addChar(key);
     else if(i < text.length())
-      replacechar(i, key);
+      replaceChar(i, key);
   }
   
   //Name must be uppercase alphanumeric
-  void addchar(int c){
+  void addChar(int c){
     if(c < 128 && (isalphanum((char)c) || isloweralpha((char)c))){
       text = text + (char)c;
-      text = text.toUpperCase();
+      upperCase();
       i ++;
     }
   }
   
-  void replacechar(int index, int c){
+  void replaceChar(int index, int c){
     if(c < 128 && (isalphanum((char)c) || isloweralpha((char)c))){
       text = text.substring(0, index) + (char)c + text.substring(index + 1);
-      text = text.toUpperCase();
+      upperCase();
       i ++;
+    }
+  }
+  
+  void upperCase(){
+    if(text.indexOf('θ') == -1)
+      text = text.toUpperCase();
+    else{
+      char chars[] = text.toCharArray();
+      for(int i = 0; i < chars.length; i ++){
+        if(chars[i] != 'θ')
+          chars[i] = Character.toUpperCase(chars[i]);
+      }
+      text = new String(chars);
     }
   }
   
@@ -277,11 +323,11 @@ class NameField extends TextField{
     text(text, x + 53, y);
     text("prgm", x, y);
     if(isFocus()){
-      if(i == 8 && text.length() == 8){
-        renderCursorFull(x + 54 + i * 12, y);
-      }
-      else
-        renderCursor(x + 53 + i * 12, y);
+      //if(i == 8 && text.length() == 8){
+        //renderCursorFull(x + 54 + i * 12, y);
+      //}
+      //else
+        renderInsertCursor(x + 53 + i * 12, y);
     }
   }
   
@@ -300,6 +346,15 @@ void renderCursor(float x, float y){
     fill(0);
     rect(x, y, 12, 20);
   }
+  
+  if(cursorDelay > 0)
+    cursorDelay --;
+}
+
+void renderInsertCursor(float x, float y){
+  stroke(0);
+  if(cursorDelay != 0 || second() % 2 == 0)
+    line(x, y, x, y + 20);
   
   if(cursorDelay > 0)
     cursorDelay --;
