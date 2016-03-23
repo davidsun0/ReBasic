@@ -113,7 +113,7 @@ class ProgramField extends TextField{
   void onKeyUp(){ return; }
   
   void render(){
-    fill(255);
+    fill(colorscheme[2]);
     rect(x - 2, y - 2, w + 4, h + 4);
     
     for(int i = tlindex; i < lines.size(); i ++){
@@ -460,7 +460,7 @@ class OpenToken{
   }
   
   void render(float x, float y){
-    fill(0);
+    fill(colorscheme[0]);
     text(text, x + 12 * start, y);
     line(x + 12 * start, y + 20, x + 12 * (start + length()), y + 20);
     

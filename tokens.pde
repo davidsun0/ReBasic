@@ -6,6 +6,9 @@ Hashtable<String, String> rtokens = new Hashtable<String, String>();
 //Byte value -> Name (?)
 Hashtable<String, String> rbytes = new Hashtable<String, String>();
 
+//1 char tokens
+String[] ctokens;
+
 void loadTokens(){
   log.debug("loading tokens...");
   printbar();
@@ -213,7 +216,7 @@ class Token{
     this.display = display;
     this.store = store;
     length = display.length();
-    c = color(0);
+    c = color(colorscheme[0]);
   }
   
   Token(String store, String display, boolean detokenizable){
@@ -239,7 +242,7 @@ class InverseToken extends Token{
   InverseToken(){
     display = " ";
     store = "%^-1%";
-    c = color(0);
+    c = color(colorscheme[0]);
     length = 1;
     inverseGlyph = new InverseGlyph(0);
   }
@@ -257,7 +260,7 @@ class GlyphToken extends Token{
     this.store = store;
     this.display = display;
     glyphs = sglyphs;
-    c = color(0);
+    c = color(colorscheme[0]);
     
     length = display.length();
   }
@@ -288,7 +291,6 @@ class InverseGlyph extends Glyph{
   }
   
   void render(float x, float y){
-    //fill(0);
     textSize(10);
     text("-1", x + 1 + 11 * index, y);
     textSize(20);

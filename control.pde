@@ -48,7 +48,7 @@ class SaveButton extends Button{
   }
   
   void render(){
-    fill(0);
+    fill(colorscheme[0]);
     textSize(15);
     text("SAVE", x, y);
   }
@@ -72,7 +72,7 @@ class ExportButton extends SaveButton{
   }
   
   void render(){
-    fill(0);
+    fill(colorscheme[0]);
     textSize(15);
     text("EXPORT", x, y);
   }
@@ -94,9 +94,7 @@ class OpenButton extends SaveButton{
   }
   
   void render(){
-    //fill(255);
-    //rect(x, y, w, h);
-    fill(0);
+    fill(colorscheme[0]);
     textSize(15);
     text("OPEN", x, y);
   }
@@ -114,9 +112,7 @@ class NewButton extends SaveButton{
   }
   
   void render(){
-    //fill(255);
-    //rect(x, y, w, h);
-    fill(0);
+    fill(colorscheme[0]);
     textSize(15);
     text("NEW", x, y);
   }
@@ -318,16 +314,12 @@ class NameField extends TextField{
   }
   
   void render(){
-    fill(0);
+    fill(colorscheme[0]);
     textSize(20);
     text(text, x + 53, y);
     text("prgm", x, y);
     if(isFocus()){
-      //if(i == 8 && text.length() == 8){
-        //renderCursorFull(x + 54 + i * 12, y);
-      //}
-      //else
-        renderInsertCursor(x + 53 + i * 12, y);
+      renderInsertCursor(x + 53 + i * 12, y);
     }
   }
   
@@ -343,7 +335,7 @@ int cursorDelay = 0;
 //renders blinking cursor
 void renderCursor(float x, float y){
   if(cursorDelay != 0 || second() % 2 == 0){
-    fill(0);
+    fill(colorscheme[0]);
     rect(x, y, 12, 20);
   }
   
@@ -352,7 +344,7 @@ void renderCursor(float x, float y){
 }
 
 void renderInsertCursor(float x, float y){
-  stroke(0);
+  stroke(colorscheme[0]);
   if(cursorDelay != 0 || second() % 2 == 0)
     line(x, y, x, y + 20);
   

@@ -4,8 +4,12 @@ final String ver = "0.20";
 
 String filepath = "untitled.8xp";
 
-//1 char tokens
-String[] ctokens;
+//color schemes, just a small diversion
+
+//                text     bkground prgmfield warning  error   info      notif
+color[] night = { #eaeaea, #222222, #333333};
+color[]   day = { #000000, #fafafa, #ffffff,  #ffc800, #e60000, #6464fa, #64e664};
+color[] colorscheme = day;
 
 //sets up autosave on close
 DisposeHandler dh;
@@ -58,7 +62,7 @@ void setup(){
 }
 
 void draw(){
-  background(250);
+  background(colorscheme[1]);
   log.render(500, 0);
   for(Element e : elements){
     e.render();

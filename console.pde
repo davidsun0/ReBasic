@@ -4,6 +4,7 @@ class ConsoleLog{
   
   ConsoleLog(){
     messages = new ArrayList<ConsoleEntry>();
+    colorTest();
   }
   
   void render(float x, float y){
@@ -20,6 +21,15 @@ class ConsoleLog{
       messages.get(i).render(0, (i - start) * 10);
     }
     popMatrix();
+  }
+  
+  void colorTest(){
+    printbar();
+    debug("debug");
+    warning("warning");
+    error("error");
+    info("info");
+    notif("notif");
   }
   
   //Black message
@@ -78,7 +88,7 @@ class ConsoleEntry{
   }
   
   void render(float x, float y){
-    fill(0);
+    fill(colorscheme[0]);
     text(message, x + 4, y);
   }
 }
@@ -89,7 +99,7 @@ class WarningEntry extends ConsoleEntry{
   }
   
   void render(float x, float y){
-    fill(255, 200, 0);
+    fill(colorscheme[3]);
     text(message, x + 4, y);
   }
 }
@@ -100,7 +110,7 @@ class ErrorEntry extends ConsoleEntry{
   }
   
   void render(float x, float y){
-    fill(230, 0, 0);
+    fill(colorscheme[4]);
     text(message, x + 4, y);
   }
 }
@@ -111,7 +121,7 @@ class InfoEntry extends ConsoleEntry{
   }
   
   void render(float x, float y){
-    fill(100, 100, 250);
+    fill(colorscheme[5]);
     text(message, x + 4, y);
   }
 }
@@ -122,7 +132,7 @@ class NotifEntry extends ConsoleEntry{
   }
   
   void render(float x, float y){
-    fill(100, 230, 100);
+    fill(colorscheme[6]);
     text(message, x + 4, y);
   }
 }
