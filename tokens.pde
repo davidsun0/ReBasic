@@ -188,6 +188,14 @@ class TokenFactory{
     //creates detokenizable token
     return new Token(input, input, true);
   }
+  
+  boolean isTokenizable(String input){
+    Token testToken = getToken(input);
+    if(testToken.display == testToken.store)
+      return false;
+    else
+      return true;
+  }
 }
 
 class Token{

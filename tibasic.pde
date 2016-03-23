@@ -1,6 +1,6 @@
 import java.util.Hashtable;
 import java.awt.event.KeyEvent;
-final String ver = "0.12";
+final String ver = "0.20";
 
 String filepath = "untitled.8xp";
 
@@ -69,9 +69,13 @@ void keyPressed(){
   //uncomment after can get current char from prgmfield
   //if(keyCode == KeyEvent.VK_F1)
     //((ProgramField)elements.get(1)).getchar();
+  if(keyCode == KeyEvent.VK_F11){
+    
+  }
   if(keyCode == KeyEvent.VK_F12){
     saveFrame("screenshot####.png");
     log.notif("saved screenshot");
+    return;
   }
   focus.onKeyDown();
 }
