@@ -85,7 +85,16 @@ class Importer{
     log.debug("reading name...");
     log.printbar();
     temp = strFromBytes(0x3C, 0x43);
+    if(temp.indexOf('[') != -1){
+      char[] whydoihavetodealwiththeta = temp.toCharArray();
+      for(int i = 0; i < whydoihavetodealwiththeta.length; i ++){
+        if(whydoihavetodealwiththeta[i] == '[')
+          whydoihavetodealwiththeta[i] = 'θ';
+      }
+      temp = new String(whydoihavetodealwiththeta);
+    }
     log.debug(temp);
+    nameField.text = temp.replace(" ", "");
     
     ArrayList<String> lines = new ArrayList<String>();
     String cline = "";
@@ -127,8 +136,6 @@ class Importer{
     
     //ProgramField pfield = (ProgramField)elements.get(1);
     //NameField nfield = (NameField)elements.get(0);
-    
-    nameField.text = temp.replace(" ", "");
     log.error("Uncomment me too!");
     //prgmField.lines = lines; 
     for(int i = 0; i < lines.size(); i ++){

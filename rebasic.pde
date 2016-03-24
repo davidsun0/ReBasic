@@ -1,15 +1,15 @@
 import java.util.Hashtable;
 import java.awt.event.KeyEvent;
-final String ver = "0.20";
+final String ver = "0.21";
 
 String filepath = "untitled.8xp";
 
 //color schemes, just a small diversion
-
 //                text     bkground prgmfield warning  error   info      notif
-color[] night = { #eaeaea, #222222, #333333};
+color[] night = { #eaeaea, #222222, #333333,  #ffd000, #ff4000, #0064ff, #00e664};
 color[]   day = { #000000, #fafafa, #ffffff,  #ffc800, #e60000, #6464fa, #64e664};
 color[] colorscheme = day;
+int schemeNo = 0;
 
 //sets up autosave on close
 DisposeHandler dh;
@@ -74,7 +74,17 @@ void keyPressed(){
   //if(keyCode == KeyEvent.VK_F1)
     //((ProgramField)elements.get(1)).getchar();
   if(keyCode == KeyEvent.VK_F11){
-    
+    //night
+    if(schemeNo == 0){
+      schemeNo = 1;
+      colorscheme = day;
+    }
+    //day
+    else if(schemeNo == 1){
+      schemeNo = 0;
+      colorscheme = night;
+    }
+    return;
   }
   if(keyCode == KeyEvent.VK_F12){
     saveFrame("screenshot####.png");

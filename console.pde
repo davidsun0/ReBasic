@@ -4,7 +4,6 @@ class ConsoleLog{
   
   ConsoleLog(){
     messages = new ArrayList<ConsoleEntry>();
-    colorTest();
   }
   
   void render(float x, float y){
@@ -25,7 +24,7 @@ class ConsoleLog{
   
   void colorTest(){
     printbar();
-    debug("debug");
+    println("123456789012345678901234567890123456789012345678".length());
     warning("warning");
     error("error");
     info("info");
@@ -118,6 +117,23 @@ class ErrorEntry extends ConsoleEntry{
 class InfoEntry extends ConsoleEntry{
   InfoEntry(String m){
     message = m;
+    if(message.length() > 47){
+      if(message.length() % 47 == 0){
+        String newMessage = message.substring(0, message.length() - 47);
+        message = message.substring(message.length() - 47);
+        log.messages.add(new InfoEntry(newMessage));
+      }
+      else{
+        for(int i = 0; i < 47; i ++){
+          if((message.length() - i) % 47 == 0){
+            String newMessage = message.substring(0, message.length() - i);
+            message = message.substring(message.length() - i);
+            log.messages.add(new InfoEntry(newMessage));
+            break;
+          }
+        }
+      }
+    }
   }
   
   void render(float x, float y){

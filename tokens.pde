@@ -185,7 +185,7 @@ class TokenFactory{
     }
     
     if(tokens.containsKey(input)){
-      return new Token("%" + input + "%", input, color(255, 100, 0));
+      return new Token("%" + input + "%", input, colorscheme[3]);
     }
    
     //creates detokenizable token

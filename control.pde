@@ -133,7 +133,7 @@ void openFile(File selected){
   }
   
   String path = selected.getAbsolutePath();
-  log.info("loading " + path);
+  log.info("loading " + path + " ...");
   String extention = path.substring(path.length() - 4, path.length());
   if(".txt".equals(extention)){
     importer.importtext(path);
