@@ -110,7 +110,6 @@ rand,AB0
 pi,AC
 PI,AC
 getKey,AD
-?,AF
 -,B0
 int(,B1
 abs(,B2
@@ -351,10 +350,7 @@ inString(,BB0F
 normalcdf(,BB10
 invNorm(,BB11
 tcdf(,BB12
-Chi^2cdf(,BB13
 chi^2cdf(,BB13
-X^2cdf(,BB13
-x^2cdf(,BB13
 Fcdf(,BB14
 binompdf(,BB15
 binomcdf(,BB16
@@ -364,10 +360,7 @@ geometpdf(,BB19
 geometcdf(,BB1A
 normalpdf(,BB1B
 tpdf(,BB1C
-Chi^2pdf(,BB1D
 chi^2pdf(,BB1D
-X^2pdf(,BB1D
-x^2pdf(,BB1D
 Fpdf(,BB1E
 randNorm(,BB1F
 tvm_Pmt(,BB20
@@ -394,10 +387,7 @@ Logistic,BB33
 LinRegTTest,BB34
 ShadeNorm(,BB35
 Shade_t(,BB36
-ShadeChi^2(,BB37
 Shadechi^2(,BB37
-ShadeX^2(,BB37
-Shadex^2(,BB37
 ShadeF(,BB38
 Matr>list(,BB39
 List>matr(,BB3A
@@ -406,10 +396,7 @@ T-Test,BB3C
 2-SampZTest(,BB3D
 1-PropZTest(,BB3E
 2-PropZTest(,BB3F
-Chi^2-Test(,BB40
 chi^2-Test(,BB40
-X^2-Test(,BB40
-x^2-Test(,BB40
 ZInterval,BB41
 2-SampZInt(,BB42
 1-PropZInt(,BB43
@@ -503,7 +490,7 @@ delta,BBA3
 epsilon,BBA4
 lambda,BBA5
 mu,BBA6
-greekpi,BBA7
+char pi,BBA7
 rho,BBA8
 Sigma,BBA9
 phi,BBAB
@@ -549,7 +536,7 @@ leftarrow,BBEB
 rightarrow,BBEC
 uparrow,BBED
 downarrow,BBEE
-specialxno2,BBF0
+specialx2,BBF0
 integral,BBF1
 biguparrow,BBF2
 bigdownarrow,BBF3
@@ -577,9 +564,6 @@ OpenLib(,EF11
 ExecLib,EF12
 invT(,EF13
 chi^2GOF-Test(,EF14
-Chi^2GOF-Test(,EF14
-X^2GOF-Test(,EF14
-x^2GOF-Test(,EF14
 LinRegTInt,EF15
 Manual-Fit,EF16
 //loading statistics tokens...
@@ -622,8 +606,7 @@ stat z,6223
 stat t,6224
 chi^2,6225
 stat chi^2,6225
-stat Chi^2,6225
-Digamma,6226
+stat Digamma,6226
 stat F,6226
 df,6227
 phat,6228

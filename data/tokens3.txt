@@ -8,7 +8,7 @@ deg,°
 Transpose,ᵀ
 ^3,³
 R>Pr(,R►Pr(
-R>Ptheta(,R►Ptheta(
+R>Ptheta(,R►Pθ(
 P>Rx(,P►Rx(
 P>Ry(,P►Ry(
 EE,ᴇ
@@ -40,11 +40,10 @@ chi^2cdf(,χ²cdf(
 chi^2pdf(,χ²pdf(
 tvm_Ipercent,tvm_I%
 DeltaList(,ΔList(
-deltaList(,ΔList(
 >Rect,►Rect
 >Polar,►Polar
 Matr>list,Matr►list(
-List>Matr,List►matr(
+List>matr,List►matr(
 chi^2-Test(,χ²-Test(
 Chi^2-Test(,χ²-Test(
 x^2-Test(,χ²-Test(
@@ -143,8 +142,4 @@ stat F,F
 //Digamma,Ϝ
 //stat F,Ϝ
 r^2,r²
-rsquared,r²
 R^2,R²
-Rsquared,R²
-//symbols which I may have to make glyphs for
-//angle ∠ BBDC ,big up arrow, big down arrow, inverted equals (BBF2, BBF3, BBF5)

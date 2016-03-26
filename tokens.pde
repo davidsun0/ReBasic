@@ -84,108 +84,108 @@ class TokenFactory{
     }
     
     if("xroot(".equals(input))
-      return new GlyphToken("%xroot(%", " √(", new SuperscriptGlyph('x', 0));
+      return new GlyphToken("§xroot(§", " √(", new SuperscriptGlyph('x', 0));
       
     if("rad".equals(input))
-      return new GlyphToken("%rad%", " ", new SuperscriptGlyph('r', 0));
+      return new GlyphToken("§rad§", " ", new SuperscriptGlyph('r', 0));
       
     //arcsin
     if("arcsin(".equals(input) || "sin^-1(".equals(input))
-      return new GlyphToken("%" + input + "%", "sin (", new InverseGlyph(3));
+      return new GlyphToken("§" + input + "§", "sin (", new InverseGlyph(3));
     //arccos
     if("arccos(".equals(input) || "cos^-1(".equals(input))
-      return new GlyphToken("%" + input + "%", "cos (", new InverseGlyph(3));
+      return new GlyphToken("§" + input + "§", "cos (", new InverseGlyph(3));
     //arctan
     if("arctan(".equals(input) || "tan^-1(".equals(input))
-      return new GlyphToken("%" + input + "%", "tan (", new InverseGlyph(3));
+      return new GlyphToken("§" + input + "§", "tan (", new InverseGlyph(3));
       
     //arcsinh
     if("arcsinh(".equals(input) || "sinh^-1(".equals(input))
-      return new GlyphToken("%" + input + "%", "sinh (", new InverseGlyph(4));
+      return new GlyphToken("§" + input + "§", "sinh (", new InverseGlyph(4));
     //arccosh
     if("arccosh(".equals(input) || "cosh^-1(".equals(input))
-      return new GlyphToken("%" + input + "%", "cosh (", new InverseGlyph(4));
+      return new GlyphToken("§" + input + "§", "cosh (", new InverseGlyph(4));
     //arctanh
     if("arctanh(".equals(input) || "tanh^-1(".equals(input))
-      return new GlyphToken("%" + input + "%", "tanh (", new InverseGlyph(4));
+      return new GlyphToken("§" + input + "§", "tanh (", new InverseGlyph(4));
     
     //User variable tokens :Lists, r, Y
     if(input.length() == 2 && input.charAt(1) >= 48 && input.charAt(1) <= 57){
       int subscript = input.charAt(1) - 48;
       //L1 to L6
       if(input.charAt(0) == 'L' && subscript >= 1 && subscript <= 6)
-        return new GlyphToken("%" + input + "%", "L ", new SubscriptGlyph((char)(input.charAt(1)), 1));
+        return new GlyphToken("§" + input + "§", "L ", new SubscriptGlyph((char)(input.charAt(1)), 1));
       //r1 to r6
       if(input.charAt(0) == 'r' && subscript >= 1 && subscript <= 6)
-        return new GlyphToken("%" + input + "%", "r ", new SubscriptGlyph((char)(input.charAt(1)), 1));
+        return new GlyphToken("§" + input + "§", "r ", new SubscriptGlyph((char)(input.charAt(1)), 1));
       //Y0 to Y9
       if(input.charAt(0) == 'Y')
-        return new GlyphToken("%" + input + "%", "Y ", new SubscriptGlyph((char)(input.charAt(1)), 1));
+        return new GlyphToken("§" + input + "§", "Y ", new SubscriptGlyph((char)(input.charAt(1)), 1));
     }
     
     //X?T and Y?T
     if(input.length() == 3 && input.charAt(2) == 'T' && input.charAt(1) >= 49 && input.charAt(1) <= 54){
       if(input.charAt(0) == 'X' || input.charAt(0) == 'Y')
-        return new GlyphToken("%" + input + "%", input.charAt(0) + "  ", new SubscriptGlyph((char)(input.charAt(1)), 1), new SubscriptGlyph('T', 2));
+        return new GlyphToken("§" + input + "§", input.charAt(0) + "  ", new SubscriptGlyph((char)(input.charAt(1)), 1), new SubscriptGlyph('T', 2));
     }
     
     //xbar
     if("xbar".equals(input)){
-      return new GlyphToken("%xbar%", "x", new AccentGlyph('¯', 0));
+      return new GlyphToken("§xbar§", "x", new AccentGlyph('¯', 0));
     }
     //ybar
     if("ybar".equals(input)){
-      return new GlyphToken("%ybar%", "y", new AccentGlyph('¯', 0));
+      return new GlyphToken("§ybar§", "y", new AccentGlyph('¯', 0));
     }
     
     //p hat and variants
     if("phat".equals(input) || "char phat".equals(input) || "char p-hat".equals(input))
-      return new GlyphToken("%" + input + "%", "p", new AccentGlyph('ˆ', 0));
+      return new GlyphToken("§" + input + "§", "p", new AccentGlyph('ˆ', 0));
     if("phat1".equals(input))
-      return new GlyphToken("%phat1%", "p ", new AccentGlyph('ˆ', 0), new SubscriptGlyph('1', 1));
+      return new GlyphToken("§phat1§", "p ", new AccentGlyph('ˆ', 0), new SubscriptGlyph('1', 1));
     if("phat2".equals(input))
-      return new GlyphToken("%phat2%", "p ", new AccentGlyph('ˆ', 0), new SubscriptGlyph('2', 1));
+      return new GlyphToken("§phat2§", "p ", new AccentGlyph('ˆ', 0), new SubscriptGlyph('2', 1));
     if("char phat".equals(input) || "char p-hat".equals(input)){
-      return new GlyphToken("%char phat%", "p", new AccentGlyph('ˆ', 0));
+      return new GlyphToken("§char phat§", "p", new AccentGlyph('ˆ', 0));
     }
     
     //statistics n1 and n2
     if(input.length() == 2 && input.charAt(0) == 'n' && (input.charAt(1) == '1' || input.charAt(1) == '2')){
-      return new GlyphToken("%" + input + "%", "n ", new SubscriptGlyph(input.charAt(1), 1));
+      return new GlyphToken("§" + input + "§", "n ", new SubscriptGlyph(input.charAt(1), 1));
     }
     
     //x1, x2, x3, y1, y2, y3
     if(input.length() == 7 && "stat ".equals(input.substring(0, 5)) && (input.charAt(6) == '1' || input.charAt(6) == '2' || input.charAt(6) == '3')){
       if(input.charAt(5) == 'x')
-        return new GlyphToken("%" + input + "%", "x ", new SubscriptGlyph(input.charAt(6), 1));
+        return new GlyphToken("§" + input + "§", "x ", new SubscriptGlyph(input.charAt(6), 1));
       if(input.charAt(5) == 'y')
-        return new GlyphToken("%" + input + "%", "y ", new SubscriptGlyph(input.charAt(6), 1));
+        return new GlyphToken("§" + input + "§", "y ", new SubscriptGlyph(input.charAt(6), 1));
     }
     
     //Statistics Sx1, Sx2, xbar1, xbar2
     if("Sx1".equals(input) || "Sx2".equals(input))
-      return new GlyphToken("%" + input + "%", "Sx ", new SubscriptGlyph(input.charAt(2), 2));
+      return new GlyphToken("§" + input + "§", "Sx ", new SubscriptGlyph(input.charAt(2), 2));
     if("xbar1".equals(input) || "xbar2".equals(input))
-      return new GlyphToken("%" + input + "%", "x ", new AccentGlyph('¯', 0), new SubscriptGlyph(input.charAt(4), 1));
+      return new GlyphToken("§" + input + "§", "x ", new AccentGlyph('¯', 0), new SubscriptGlyph(input.charAt(4), 1));
     
     //image tokens
     if("invertedequal".equals(input) || "biguparrow".equals(input) || "bigdownarrow".equals(input) || "squaremark".equals(input))
-      return new GlyphToken("%" + input + "%", " ", new ImageGlyph("glyphs/" + input + ".png", 0));
+      return new GlyphToken("§" + input + "§", " ", new ImageGlyph("glyphs/" + input + ".png", 0));
     if("+mark".equals(input) || "crossmark".equals(input) || "plusmark".equals(input))
-      return new GlyphToken("%crossmark%", " ", new ImageGlyph("glyphs/plusmark.png", 0));
+      return new GlyphToken("§crossmark§", " ", new ImageGlyph("glyphs/plusmark.png", 0));
     if(".mark".equals(input) || "dotmark".equals(input))
-      return new GlyphToken("%dotmark%", " ", new ImageGlyph("glyphs/dotmark.png", 0));
+      return new GlyphToken("§dotmark§", " ", new ImageGlyph("glyphs/dotmark.png", 0));
     if("angle".equals(input))
-      return new GlyphToken("%angle%", " ", new ImageGlyph("glyphs/angleglyph.png", 0));
+      return new GlyphToken("§angle§", " ", new ImageGlyph("glyphs/angleglyph.png", 0));
     
     for(int i = 0; i < prettyTokens.length; i ++){
       if(prettyTokens[i][0].equals(input)){
-        return new Token("%" + input + "%", prettyTokens[i][1]);
+        return new Token("§" + input + "§", prettyTokens[i][1]);
       }
     }
     
     if(tokens.containsKey(input)){
-      return new Token("%" + input + "%", input, colorscheme[3]);
+      return new Token("§" + input + "§", input, colorscheme[3]);
     }
    
     //creates detokenizable token
@@ -241,7 +241,7 @@ class InverseToken extends Token{
   
   InverseToken(){
     display = " ";
-    store = "%^-1%";
+    store = "§^-1§";
     c = color(colorscheme[0]);
     length = 1;
     inverseGlyph = new InverseGlyph(0);

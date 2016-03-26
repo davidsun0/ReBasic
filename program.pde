@@ -80,21 +80,13 @@ class Program{
           tokenbytes(Integer.toHexString(prgm[i].charAt(j)));
         }
         
-        //sign for tokenizer
-        else if(currchar == '%'){
-          
-          //detecting %%% to allow for %
-          //but %percent% is prefered
-          if(j < prgm[i].length() - 2 && '%' == prgm[i].charAt(j + 1) && '%' == prgm[i].charAt(j + 2)){
-            prgm[i] = prgm[i].substring(0, j) + prgm[i].substring(j + 2, prgm[i].length());
-            log.debug(prgm[i]);//hopefully this works
-            tokenbytes(tokens.get("%"));
-          }
+        //char for tokenizer
+        else if(currchar == '§'){
           
           //tokenizing
           String token;
-          token = prgm[i].substring(j + 1, prgm[i].indexOf('%', j + 1));
-          prgm[i] = prgm[i].substring(0, j) + prgm[i].substring(prgm[i].indexOf('%', j + 1) + 1, prgm[i].length());
+          token = prgm[i].substring(j + 1, prgm[i].indexOf('§', j + 1));
+          prgm[i] = prgm[i].substring(0, j) + prgm[i].substring(prgm[i].indexOf('§', j + 1) + 1, prgm[i].length());
           log.info("encoding token " + token + " on line " + (i+1) + " to " + tokens.get(token));
           
           //bprgmBytes also increments length

@@ -253,7 +253,7 @@ class Importer{
       return output;
     }
     else if((output = rtokens.get(hex)) != null)
-      return "%" + output + "%";
+      return "§" + output + "§";
     else if((chr = Integer.valueOf(hex, 16)) < 128 && isalphanum((char)chr)){
       return Character.toString((char)chr);
     }
